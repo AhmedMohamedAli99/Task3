@@ -20,92 +20,91 @@ import java.util.Properties;
 
 public class RestAssuredTest {
 
-    public static Properties prop;
-    static String configpath=System.getProperty("user.dir")+"\\src\\test\\java\\config\\configurations.properties"; // to get path for config properties file
+	public static Properties prop;
+	static String configpath=System.getProperty("user.dir")+"\\src\\test\\java\\config\\configurations.properties"; // to get path for config properties file
 
-    public RestAssuredTest() throws IOException {
-        prop=new Properties();
-        FileInputStream file=new FileInputStream(configpath);
-        prop.load(file);
-    }
+	public RestAssuredTest() throws IOException {
+		prop=new Properties();
+		FileInputStream file=new FileInputStream(configpath);
+		prop.load(file);
+	}
 
-    @Test(priority=1)
-    public void create_user()
-    {
-       // body
-        JSONObject request=new JSONObject();
-        request.put("title","new");
-        request.put("body","bar");
-        request.put("userId",1);
+	@Test(priority=1)
+	public void create_user()
+	{
+		// body
+		JSONObject request=new JSONObject();
+		request.put("title","new");
+		request.put("body","bar");
+		request.put("userId",1);
 
-        RestAssured.baseURI= prop.getProperty("baseURI"); //base url from property file
-        RequestSpecification httprequest=RestAssured.given();
-        httprequest.header("Content-Type","application/json"); //header
-        httprequest.body(request);  //body of request
-        Response response=httprequest.request(Method.POST);
-        String responsebody=response.getBody().asString();  //read response as string
-        System.out.println("reponse body is :"+responsebody); //print response
+		RestAssured.baseURI= prop.getProperty("baseURI"); //base url from property file
+		RequestSpecification httprequest=RestAssured.given();
+		httprequest.header("Content-Type","application/json"); //header
+		httprequest.body(request);  //body of request
+		Response response=httprequest.request(Method.POST);
+		String responsebody=response.getBody().asString();  //read response as string
+		System.out.println("reponse body is :"+responsebody); //print response
 
-        //assert on status code
-        int statuscode=response.getStatusCode();
-        System.out.println("status code :"+statuscode);
-        Assert.assertEquals(statuscode, 201);
+		//assert on status code
+		int statuscode=response.getStatusCode();
+		System.out.println("status code :"+statuscode);
+		Assert.assertEquals(statuscode, 201);
 
-        //assert title
-        String title_post=response.jsonPath().get("title");
-        System.out.println("title_post :"+title_post);
-        Assert.assertEquals(title_post, "new");
+		//assert title
+		String title_post=response.jsonPath().get("title");
+		System.out.println("title_post :"+title_post);
+		Assert.assertEquals(title_post, "new");
 
-        //assert body
-        String body_post=response.jsonPath().get("body");
-        System.out.println("body _post :"+body_post);
-        Assert.assertEquals(body_post, "bar");
+		//assert body
+		String body_post=response.jsonPath().get("body");
+		System.out.println("body _post :"+body_post);
+		Assert.assertEquals(body_post, "bar");
 
-        //assert userid
-        int user_id=response.jsonPath().get("userId");
-        System.out.println("user id :"+user_id);
-        Assert.assertEquals(user_id, 1);
-    }
-    @Test(priority = 2)
-    public void Retrieve_specific_user()
-    {
-        String pathparam= prop.getProperty("userid");
-        RestAssured.baseURI= prop.getProperty("baseURI");
-        RequestSpecification httprequest=RestAssured.given();
-        Response response=httprequest.request(Method.GET,pathparam);
-        String responsebody=response.getBody().asString();  //read response as string
-        System.out.println("reponse body is :"+responsebody);
-        //assert status code
-        int statuscode=response.getStatusCode();
-        System.out.println("status code :"+statuscode);
-        Assert.assertEquals(statuscode, 200);
-         //assert user_id
-        int userid=response.jsonPath().get("id");
-        System.out.println("userid :"+userid);
-        Assert.assertEquals(userid, 1);
+		//assert userid
+		int user_id=response.jsonPath().get("userId");
+		System.out.println("user id :"+user_id);
+		Assert.assertEquals(user_id, 1);
+	}
+	@Test(priority = 2)
+	public void Retrieve_specific_user()
+	{
+		String pathparam= prop.getProperty("userid");
+		RestAssured.baseURI= prop.getProperty("baseURI");
+		RequestSpecification httprequest=RestAssured.given();
+		Response response=httprequest.request(Method.GET,pathparam);
+		String responsebody=response.getBody().asString();  //read response as string
+		System.out.println("reponse body is :"+responsebody);
+		//assert status code
+		int statuscode=response.getStatusCode();
+		System.out.println("status code :"+statuscode);
+		Assert.assertEquals(statuscode, 200);
+		//assert user_id
+		int userid=response.jsonPath().get("id");
+		System.out.println("userid :"+userid);
+		Assert.assertEquals(userid, 1);
 
-    }
-   @Test(priority = 3)
-    public void Retrieve_all_users () throws IOException {
-        RestAssured.baseURI= prop.getProperty("baseURI");
-        RequestSpecification httprequest=RestAssured.given();
-        Response response=httprequest.request(Method.GET);
-        String responsebody=response.getBody().asString();
-        System.out.println("response body is :"+responsebody);
+	}
+	@Test(priority = 3)
+	public void Retrieve_all_users () throws IOException {
+		RestAssured.baseURI= prop.getProperty("baseURI");
+		RequestSpecification httprequest=RestAssured.given();
+		Response response=httprequest.request(Method.GET);
+		String responsebody=response.getBody().asString();
+		System.out.println("response body is :"+responsebody);
 
-         //assert on status code
-        int statuscode=response.getStatusCode();
-        System.out.println("status_code :"+statuscode);
-        Assert.assertEquals(statuscode, 200);
-        //mapper
-        ObjectMapper mapper = new ObjectMapper();
-        List<Object> list =mapper.readValue( responsebody,List.class);
+		//assert on status code
+		int statuscode=response.getStatusCode();
+		System.out.println("status_code :"+statuscode);
+		Assert.assertEquals(statuscode, 200);
+		//mapper
+		ObjectMapper mapper = new ObjectMapper();
+		List<Object> list =mapper.readValue( responsebody,List.class);
 
-        //assert number of user
-        int number_of_user=  list.size();
-        System.out.println("number of user: "+number_of_user);
-        Assert.assertEquals(number_of_user,100);
+		//assert number of user
+		int number_of_user=  list.size();
+		System.out.println("number of user: "+number_of_user);
+		Assert.assertEquals(number_of_user,100);
 
-    }
+	}
 }
-
