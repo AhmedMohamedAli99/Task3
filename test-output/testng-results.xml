@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="8938" started-at="2021-06-16T15:56:58 EET" finished-at="2021-06-16T15:57:07 EET">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="8938" started-at="2021-06-16T15:56:58 EET" finished-at="2021-06-16T15:57:07 EET">
+      <class name="tests.RestAssuredTest">
+        <test-method status="PASS" signature="create_user()[pri:1, instance:tests.RestAssuredTest@3712b94]" name="create_user" duration-ms="7387" started-at="2021-06-16T15:56:58 EET" finished-at="2021-06-16T15:57:06 EET">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- create_user -->
+        <test-method status="PASS" signature="Retrieve_specific_user()[pri:2, instance:tests.RestAssuredTest@3712b94]" name="Retrieve_specific_user" duration-ms="612" started-at="2021-06-16T15:57:06 EET" finished-at="2021-06-16T15:57:06 EET">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Retrieve_specific_user -->
+        <test-method status="PASS" signature="Retrieve_all_users()[pri:3, instance:tests.RestAssuredTest@3712b94]" name="Retrieve_all_users" duration-ms="843" started-at="2021-06-16T15:57:06 EET" finished-at="2021-06-16T15:57:07 EET">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Retrieve_all_users -->
+      </class> <!-- tests.RestAssuredTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
